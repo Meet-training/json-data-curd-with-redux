@@ -1,7 +1,7 @@
 import React from "react";
 
-const EditUser = () => {
+const ViewUser = () => {
   return <div>EditUser</div>;
 };
 
-export default EditUser;
+export default ViewUser;

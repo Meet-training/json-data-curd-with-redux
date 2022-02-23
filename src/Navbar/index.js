@@ -10,7 +10,7 @@ export default function ButtonAppBar() {
       <AppBar position="static" sx={{ bgcolor: "#2E3B55" }}>
         <Toolbar variant="dense">
           <Typography variant="h6" component="div" sx={{ py: 2, pl: 3 }}>
-            Curd Demo With Rest API
+            Curd With Rest API
           </Typography>
         </Toolbar>
       </AppBar>
