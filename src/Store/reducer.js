@@ -1,22 +1,25 @@
 import * as types from "./actionType";
 
 const initialState = {
-  users: [],
-  user: {},
-  loading: true,
+  records: [],
+  record: {},
 };
 
-const usersReducers = (state = initialState, action) => {
+const recordsReducers = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_USER:
+    case types.GET_RECORDS:
       return {
         ...state,
-        users: action.payload,
-        loading: false,
+        records: action.payload,
+      };
+    case types.DELETE_RECORDS:
+    case types.ADD_RECORDS:
+      return {
+        ...state,
       };
     default:
       return state;
   }
 };
 
-export default usersReducers;
+export default recordsReducers;

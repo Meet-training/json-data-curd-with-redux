@@ -1,5 +1,5 @@
 import { createStore, compose, applyMiddleware } from "redux";
-import rootReducer from "./rootReducer";
+import recordsReducers from "./reducer";
 import reduxThunk from "redux-thunk";
 import logger from "redux-logger";
 
@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const store = createStore(
-  rootReducer,
+  recordsReducers,
   compose(
     applyMiddleware(...middlewares),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
