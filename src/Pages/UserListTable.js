@@ -1,15 +1,14 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
+import Pagination from "@mui/material/Pagination";
 import { Button, Table, TableBody, TableContainer } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteOutlineTwoToneIcon from "@mui/icons-material/DeleteOutlineTwoTone";
-
 import { TableHead, TableRow, Paper } from "@mui/material";
-
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import { deleteRecord, fetchRecord } from "../Store/action";
-import { NavLink, useHistory } from "react-router-dom";
+import { deleteRecord, fetchAirline, fetchRecord } from "../Store/action";
+import { useHistory } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,11 +37,20 @@ const UserListTable = () => {
 
   let dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(fetchRecord());
+  useEffect(() => {
+    let queryParams = {
+      page: 0,
+      size: 5,
+    };
+    dispatch(fetchRecord(queryParams));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAirline());
   }, [dispatch]);
 
   const handleDeleteRecord = (id) => {
+    console.log("Delete Id :", id);
     window.confirm(`are you sure you want to delete ${id} ?`);
     dispatch(deleteRecord(id));
   };
@@ -71,35 +79,45 @@ const UserListTable = () => {
               <StyledTableCell align="center">Trips</StyledTableCell>
               <StyledTableCell align="center">Id</StyledTableCell>
               <StyledTableCell align="center">Airline Id</StyledTableCell>
+              <StyledTableCell align="center">Airline Name</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {records.map((row) => (
-              <StyledTableRow key={row._id}>
-                <StyledTableCell component="th" scope="row">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.trips}</StyledTableCell>
-                <StyledTableCell align="center">{row._id}</StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.airline[0].id}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <Button>
-                    <NavLink to="/editUser/:id">
+            {records &&
+              records.map((row) => (
+                <StyledTableRow key={row._id}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.name || "-"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.trips || "-"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row._id}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.airline[0].id || "-"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.airline[0].name || "-"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button
+                      onClick={() => {
+                        history.push(`/editRecord/${row._id}`);
+                      }}
+                    >
                       <EditRoundedIcon sx={{ color: "mediumseagreen" }} />
-                    </NavLink>
-                  </Button>
+                    </Button>
 
-                  <Button onClick={() => handleDeleteRecord(row.id)}>
-                    <DeleteOutlineTwoToneIcon sx={{ color: "red" }} />
-                  </Button>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+                    <Button onClick={() => handleDeleteRecord(row.id)}>
+                      <DeleteOutlineTwoToneIcon sx={{ color: "red" }} />
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
           </TableBody>
         </Table>
+        <Pagination count={10} color="primary" />
       </TableContainer>
     </Paper>
   );

@@ -1,4 +1,6 @@
+export const GET_AIRLINE = "GET_AIRLINE";
 export const GET_RECORDS = "GET_RECORDS";
 export const ADD_RECORDS = "ADD_RECORDSS";
+export const GET_SINGLE_RECORD = "GET_SINGLE_RECORD";
 export const EDIT_RECORDS = "EDIT_RECORDSS";
 export const DELETE_RECORDS = "DELETE_RECORDSS";

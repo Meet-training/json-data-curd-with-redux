@@ -1,17 +1,5 @@
-import {
-  TextField,
-  Grid,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Paper,
-  Typography,
-  Button,
-} from "@mui/material";
-
 import React from "react";
+import { TextField, Grid, Paper, Typography, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addRecord } from "../Store/action";
@@ -82,6 +70,7 @@ const AddRecord = () => {
 
           <Grid>
             <Button
+              type="submit"
               variant="contained"
               color="error"
               sx={{ mr: 1 }}
