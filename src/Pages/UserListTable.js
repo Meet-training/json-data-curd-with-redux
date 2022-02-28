@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import queryString from "query-string";
 import { styled } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import { Button, Table, TableBody, TableContainer } from "@mui/material";
@@ -31,28 +32,46 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const UserListTable = () => {
-  const { records } = useSelector((state) => state);
+  const { getrecords } = useSelector((state) => state);
+
+  const [page, setPage] = React.useState(1);
 
   let history = useHistory();
 
   let dispatch = useDispatch();
 
   useEffect(() => {
-    let queryParams = {
-      page: 0,
-      size: 5,
-    };
-    dispatch(fetchRecord(queryParams));
+    dispatch(fetchRecord());
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchAirline());
   }, [dispatch]);
 
+  useEffect(() => {
+    let params = {
+      page: "1",
+      size: "10",
+    };
+    let queryparams = queryString.stringify(params);
+    dispatch(fetchRecord(queryparams));
+  }, [dispatch]);
+
   const handleDeleteRecord = (id) => {
-    console.log("Delete Id :", id);
     window.confirm(`are you sure you want to delete ${id} ?`);
     dispatch(deleteRecord(id));
+  };
+
+  const pageChangeHandler = (event, value) => {
+    event.preventDefault();
+    console.log("value", value);
+    let params = {
+      page: { value },
+      size: "10",
+    };
+    let queryparams = queryString.stringify(params);
+    dispatch(fetchRecord(queryparams));
+    setPage();
   };
 
   return (
@@ -84,8 +103,8 @@ const UserListTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {records &&
-              records.map((row) => (
+            {getrecords &&
+              getrecords.map((row) => (
                 <StyledTableRow key={row._id}>
                   <StyledTableCell component="th" scope="row">
                     {row.name || "-"}
@@ -117,7 +136,12 @@ const UserListTable = () => {
               ))}
           </TableBody>
         </Table>
-        <Pagination count={10} color="primary" />
+        <Pagination
+          page={page}
+          onChange={(value) => pageChangeHandler(value)}
+          count={getrecords.length}
+          color="secondary"
+        />
       </TableContainer>
     </Paper>
   );

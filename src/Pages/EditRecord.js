@@ -26,8 +26,6 @@ const EditRecord = () => {
 
   const { airlines } = useSelector((state) => state);
 
-  console.log(airlines);
-
   const { record } = useSelector((state) => state);
 
   const [state, setState] = useState({});
@@ -50,7 +48,6 @@ const EditRecord = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("OnSubmit :", state);
     dispatch(updateRecord(id, state));
     history.push("/");
   };

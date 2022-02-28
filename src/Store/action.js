@@ -11,10 +11,10 @@ export const fetchAirline = () => {
   };
 };
 
-export const fetchRecord = () => {
+export const fetchRecord = (queryparams) => {
   return async function (dispatch) {
     const response = await axios.get(
-      `${process.env.REACT_APP_API}/passenger?page=0&size=10`
+      `${process.env.REACT_APP_API}/passenger?${queryparams}`
     );
     dispatch({
       type: types.GET_RECORDS,

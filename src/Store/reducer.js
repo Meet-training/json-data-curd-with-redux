@@ -2,7 +2,7 @@ import * as types from "./actionType";
 
 const initialState = {
   airlines: [],
-  records: [],
+  getrecords: [],
   record: {},
 };
 
@@ -16,19 +16,19 @@ const recordsReducers = (state = initialState, action) => {
     case types.GET_RECORDS:
       return {
         ...state,
-        records: action.payload,
+        getrecords: action.payload,
       };
     case types.ADD_RECORDS:
-    case types.DELETE_RECORDS:
-    case types.EDIT_RECORDS:
-      return {
-        ...state,
-      };
     case types.GET_SINGLE_RECORD:
       return {
         ...state,
         record: action.payload,
       };
+    case types.EDIT_RECORDS:
+      return {
+        ...state,
+      };
+    case types.DELETE_RECORDS:
     default:
       return state;
   }
