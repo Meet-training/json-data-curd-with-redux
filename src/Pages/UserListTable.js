@@ -63,15 +63,13 @@ const UserListTable = () => {
   };
 
   const pageChangeHandler = (event, value) => {
-    event.preventDefault();
-    console.log("value", value);
     let params = {
-      page: { value },
+      page: value,
       size: "10",
     };
     let queryparams = queryString.stringify(params);
     dispatch(fetchRecord(queryparams));
-    setPage();
+    setPage(value);
   };
 
   return (
@@ -138,7 +136,7 @@ const UserListTable = () => {
         </Table>
         <Pagination
           page={page}
-          onChange={(value) => pageChangeHandler(value)}
+          onChange={pageChangeHandler}
           count={getrecords.length}
           color="secondary"
         />
