@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./Navbar";
 import AddRecord from "./Pages/AddRecord";
@@ -8,7 +7,7 @@ import EditRecord from "./Pages/EditRecord";
 
 const App = () => {
   return (
-    <div className="App">
+    <>
       <NavBar />
 
       <Switch>
@@ -16,7 +15,7 @@ const App = () => {
         <Route path="/addRecord" component={AddRecord} />
         <Route path="/editRecord/:id" component={EditRecord} />
       </Switch>
-    </div>
+    </>
   );
 };
 

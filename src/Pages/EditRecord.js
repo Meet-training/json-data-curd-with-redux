@@ -26,14 +26,14 @@ const EditRecord = () => {
 
   const { airlines } = useSelector((state) => state);
 
-  const { record } = useSelector((state) => state);
+  const { passengerRecord } = useSelector((state) => state);
 
   const [state, setState] = useState({});
 
   let data = {
-    name: record.name,
-    trips: record.trips,
-    airline: record.airline && record.airline[0].id,
+    name: passengerRecord.name,
+    trips: passengerRecord.trips,
+    airline: passengerRecord.airline && passengerRecord.airline[0].id,
   };
 
   useEffect(() => {
@@ -41,10 +41,10 @@ const EditRecord = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (record) {
+    if (passengerRecord) {
       setState({ ...data });
     }
-  }, [record]);
+  }, [passengerRecord]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -89,7 +89,7 @@ const EditRecord = () => {
               value={state.airline || ""}
               onChange={(e) => setState({ ...state, airline: e.target.value })}
               label="Airline"
-              style={{
+              sx={{
                 textAlign: "left",
                 marginBottom: "15px",
               }}

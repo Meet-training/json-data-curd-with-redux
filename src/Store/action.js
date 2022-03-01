@@ -1,9 +1,11 @@
 import axios from "axios";
 import * as types from "./actionType";
 
+let BASE_API = process.env.REACT_APP_API;
+
 export const fetchAirline = () => {
   return async function (dispatch) {
-    const response = await axios.get(`${process.env.REACT_APP_API}/airlines`);
+    const response = await axios.get(`${BASE_API}/airlines`);
     dispatch({
       type: types.GET_AIRLINE,
       payload: response.data,
@@ -13,11 +15,9 @@ export const fetchAirline = () => {
 
 export const fetchRecord = (queryparams) => {
   return async function (dispatch) {
-    const response = await axios.get(
-      `${process.env.REACT_APP_API}/passenger?${queryparams}`
-    );
+    const response = await axios.get(`${BASE_API}/passenger?${queryparams}`);
     dispatch({
-      type: types.GET_RECORDS,
+      type: types.GET_PASSENGER,
       payload: response.data.data,
     });
   };
@@ -25,20 +25,18 @@ export const fetchRecord = (queryparams) => {
 
 export const addRecord = (data) => {
   return async function (dispatch) {
-    await axios.post(`${process.env.REACT_APP_API}/passenger`, data);
+    await axios.post(`${BASE_API}/passenger`, data);
     dispatch({
-      type: types.ADD_RECORDS,
+      type: types.ADD_PASSENGER,
     });
   };
 };
 
 export const getSingleRecord = (id) => {
   return async function (dispatch) {
-    const response = await axios.get(
-      `${process.env.REACT_APP_API}/passenger/${id}`
-    );
+    const response = await axios.get(`${BASE_API}/passenger/${id}`);
     dispatch({
-      type: types.GET_SINGLE_RECORD,
+      type: types.GET_SINGLE_PASSENGER,
       payload: response.data,
     });
   };
@@ -46,9 +44,9 @@ export const getSingleRecord = (id) => {
 
 export const updateRecord = (id, data) => {
   return async function (dispatch) {
-    await axios.put(`${process.env.REACT_APP_API}/passenger/${id}`, data);
+    await axios.put(`${BASE_API}/passenger/${id}`, data);
     dispatch({
-      type: types.EDIT_RECORDS,
+      type: types.EDIT_PASSENGER,
     });
     dispatch(fetchRecord());
   };
@@ -56,9 +54,9 @@ export const updateRecord = (id, data) => {
 
 export const deleteRecord = (id) => {
   return async function (dispatch) {
-    await axios.delete(`${process.env.REACT_APP_API}/passenger/${id}`);
+    await axios.delete(`${BASE_API}/passenger/${id}`);
     dispatch({
-      type: types.DELETE_RECORDS,
+      type: types.DELETE_PASSENGER,
     });
     dispatch(fetchRecord());
   };

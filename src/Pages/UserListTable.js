@@ -32,7 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const UserListTable = () => {
-  const { getrecords } = useSelector((state) => state);
+  const { getPassenger } = useSelector((state) => state);
 
   const [page, setPage] = React.useState(1);
 
@@ -50,8 +50,8 @@ const UserListTable = () => {
 
   useEffect(() => {
     let params = {
-      page: "1",
-      size: "10",
+      page: 1,
+      size: 10,
     };
     let queryparams = queryString.stringify(params);
     dispatch(fetchRecord(queryparams));
@@ -65,7 +65,7 @@ const UserListTable = () => {
   const pageChangeHandler = (event, value) => {
     let params = {
       page: value,
-      size: "10",
+      size: 10,
     };
     let queryparams = queryString.stringify(params);
     dispatch(fetchRecord(queryparams));
@@ -101,8 +101,8 @@ const UserListTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {getrecords &&
-              getrecords.map((row) => (
+            {Array.isArray(getPassenger) &&
+              getPassenger.map((row) => (
                 <StyledTableRow key={row._id}>
                   <StyledTableCell component="th" scope="row">
                     {row.name || "-"}
@@ -137,7 +137,7 @@ const UserListTable = () => {
         <Pagination
           page={page}
           onChange={pageChangeHandler}
-          count={getrecords.length}
+          count={getPassenger.length}
           color="secondary"
         />
       </TableContainer>
